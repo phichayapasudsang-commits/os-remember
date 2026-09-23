@@ -1,0 +1,1929 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OS Exam Practice - ข้อสอบระบบปฏิบัติการ 109 ข้อ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    pre code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
+
+  <!-- Header -->
+  <header class="bg-indigo-700 text-white shadow-md sticky top-0 z-30">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center space-x-3">
+        <i class="fa-solid fa-microchip text-2xl text-indigo-300"></i>
+        <div>
+          <h1 class="text-xl font-bold leading-tight">คลังข้อสอบเก่า OS (109 ข้อ)</h1>
+          <p class="text-xs text-indigo-200">ถอดความครบถ้วน พร้อมเฉลยและระบบทดสอบตรวจผลทันที</p>
+        </div>
+      </div>
+
+      <!-- Stats Tracker -->
+      <div class="flex items-center gap-4 bg-indigo-800/80 px-4 py-2 rounded-xl border border-indigo-500/30 text-sm">
+        <div>
+          <span class="text-indigo-300 block text-xs">ทำแล้ว</span>
+          <span id="answered-count" class="font-bold text-white text-base">0</span>/109
+        </div>
+        <div class="border-l border-indigo-600 pl-3">
+          <span class="text-emerald-300 block text-xs">ถูกต้อง</span>
+          <span id="correct-count" class="font-bold text-emerald-400 text-base">0</span>
+        </div>
+        <div class="border-l border-indigo-600 pl-3">
+          <span class="text-rose-300 block text-xs">ผิด</span>
+          <span id="wrong-count" class="font-bold text-rose-400 text-base">0</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Filter & Actions Bar -->
+  <nav class="bg-white border-b border-slate-200 sticky top-[61px] z-20 shadow-sm">
+    <div class="max-w-5xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-2">
+      <!-- Chapter selection -->
+      <div class="flex items-center space-x-2">
+        <label for="chapter-select" class="text-xs font-semibold text-slate-500 uppercase">บทเรียน:</label>
+        <select id="chapter-select"
+          class="bg-slate-100 border border-slate-300 text-slate-700 text-sm rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-indigo-500 outline-none">
+          <option value="all">ทั้งหมด (Chapter 1 - 7)</option>
+          <option value="1">Chapter 1: Introduction</option>
+          <option value="2">Chapter 2: OS Structure</option>
+          <option value="3">Chapter 3: Process</option>
+          <option value="4">Chapter 4: Thread</option>
+          <option value="5">Chapter 5: Process Sync</option>
+          <option value="6">Chapter 6: CPU Scheduling</option>
+          <option value="7">Chapter 7: Deadlock</option>
+        </select>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="flex items-center gap-2 flex-wrap">
+        <button id="btn-shuffle-options"
+          class="px-3 py-1.5 text-xs font-medium text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-lg transition shadow-sm"
+          title="สลับลำดับตัวเลือก (Choice) ของทุกข้อ">
+          <i class="fa-solid fa-shuffle mr-1"></i> สลับตัวเลือก
+        </button>
+        <button id="btn-reset"
+          class="px-3 py-1.5 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition border border-slate-300">
+          <i class="fa-solid fa-rotate-right mr-1"></i> เริ่มทำใหม่
+        </button>
+        <button id="btn-show-all-answers"
+          class="px-3 py-1.5 text-xs font-medium text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 rounded-lg transition">
+          <i class="fa-solid fa-eye mr-1"></i> เฉลยทั้งหมด
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content Questions List -->
+  <main class="max-w-5xl mx-auto px-4 py-6 flex-grow w-full">
+    <div id="questions-container" class="space-y-6">
+      <!-- Question cards will be rendered dynamically by JavaScript -->
+    </div>
+  </main>
+
+  <footer class="bg-slate-900 text-slate-400 py-6 text-center text-xs mt-10">
+    <div class="max-w-5xl mx-auto px-4">
+      <p>OS Midterm Exam Preparation - ถอดแบบเนื้อหาข้อสอบ 109 ข้อ</p>
+    </div>
+  </footer>
+
+  <script>
+    const questionsData = [
+      // Chapter 1: Introduction
+      {
+        id: 1,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "1. What is the OS design goal in user view?",
+        options: [
+          { key: "a", text: "Ease of use" },
+          { key: "b", text: "Performance" },
+          { key: "c", text: "Resource utilization" },
+          { key: "d", text: "b and c" }
+        ],
+        answer: "a",
+        note: "ใน user view ผู้ใช้งานมักคำนึงถึง Ease of use ตาม text book"
+      },
+      {
+        id: 2,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "2. What is the OS design goal in system view?",
+        options: [
+          { key: "a", text: "Resource allocator" },
+          { key: "b", text: "Control program" },
+          { key: "c", text: "Ease of use" },
+          { key: "d", text: "a and b" }
+        ],
+        answer: "d",
+        note: "System view มอง OS เป็น Resource allocator และ Control program"
+      },
+      {
+        id: 3,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "3. what is the most essential part of OS?",
+        options: [
+          { key: "a", text: "Kernel" },
+          { key: "b", text: "System program" },
+          { key: "c", text: "Application program" },
+          { key: "d", text: "All" }
+        ],
+        answer: "a",
+        note: "Kernel คือส่วนประกอบสำคัญและเป็นแกนกลางหลักของระบบปฏิบัติการที่รันอยู่ตลอดเวลา"
+      },
+      {
+        id: 4,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "4. What is the execution mode of system calls?",
+        options: [
+          { key: "a", text: "Kernel mode" },
+          { key: "b", text: "Supervisor mode" },
+          { key: "c", text: "Privileged mode" },
+          { key: "d", text: "All (เพราะคือคำเดียวกัน)" }
+        ],
+        answer: "d",
+        note: "Kernel mode, Supervisor mode, Privileged mode, System mode คือคำเรียกโหมดการทำงานระดับแกนกลางเหมือนกัน"
+      },
+      {
+        id: 5,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "5. Which is the category of C compiler and C library?",
+        options: [
+          { key: "a", text: "Kernel" },
+          { key: "b", text: "System program" },
+          { key: "c", text: "Application program" },
+          { key: "d", text: "utility" }
+        ],
+        answer: "b",
+        note: "Compiler และ Runtime Library จัดอยู่ในหมวดหมู่ System program ที่มาเสริมการทำงานของระบบ"
+      },
+      {
+        id: 6,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "6. Which is the resource that OS cannot manage?",
+        options: [
+          { key: "a", text: "Processor" },
+          { key: "b", text: "Cache" },
+          { key: "c", text: "Memory" },
+          { key: "d", text: "Hard disk" }
+        ],
+        answer: "b",
+        note: "Cache (L1, L2, L3) ถูกจัดการด้วยฮาร์ดแวร์โดยตรง ระบบปฏิบัติการไม่สามารถเข้าควบคุมการย้ายข้อมูลเข้าออก Cache ได้โดยตรง"
+      },
+      {
+        id: 7,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "7. What is another name of bootstrap program?",
+        options: [
+          { key: "a", text: "Operating system" },
+          { key: "b", text: "Firmware" },
+          { key: "c", text: "Middleware" },
+          { key: "d", text: "Software" }
+        ],
+        answer: "b",
+        note: "Bootstrap program มักเก็บอยู่ใน ROM หรือ EEPROM จึงเรียกว่า Firmware (เช่น BIOS / UEFI)"
+      },
+      {
+        id: 8,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "8. What is the first program being executed?",
+        options: [
+          { key: "a", text: "Operating system" },
+          { key: "b", text: "Firmware" },
+          { key: "c", text: "Middleware" },
+          { key: "d", text: "Software" }
+        ],
+        answer: "b",
+        note: "เมื่อเปิดเครื่อง โปรแกรม Firmware (Bootstrap) จะเป็นโปรแกรมแรกสุดที่ถูกโหลดขึ้นมาทำงานเพื่อตั้งค่าและโหลด OS"
+      },
+      {
+        id: 9,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "9. What is the device that stores firmware?",
+        options: [
+          { key: "a", text: "ROM" },
+          { key: "b", text: "EEPROM" },
+          { key: "c", text: "Microprocessor" },
+          { key: "d", text: "A and B" }
+        ],
+        answer: "d",
+        note: "Firmware จะถูกบันทึกไว้ใน Non-volatile memory เช่น ROM หรือ Flash/EEPROM"
+      },
+      {
+        id: 10,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "10. Which device requires a driver?",
+        options: [
+          { key: "a", text: "CPU" },
+          { key: "b", text: "Cache" },
+          { key: "c", text: "RAM" },
+          { key: "d", text: "SCSI" }
+        ],
+        answer: "d",
+        note: "อุปกรณ์ I/O เช่น SCSI controller จำเป็นต้องใช้ Device Driver สำหรับการสั่งการและติดต่อ"
+      },
+      {
+        id: 11,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "11. What is the usefulness of DMA?",
+        options: [
+          { key: "a", text: "CPU is less busy" },
+          { key: "b", text: "Increases CPU clock speed" },
+          { key: "c", text: "Bypasses main memory completely" },
+          { key: "d", text: "Reduces bus traffic to zero" }
+        ],
+        answer: "a",
+        note: "Direct Memory Access (DMA) ช่วยให้อุปกรณ์โอนย้ายข้อมูลกับ RAM ได้โดยตรง ทำให้ CPU ไม่ต้องทำงานรับส่งทีละไบต์ (CPU is less busy)"
+      },
+      {
+        id: 12,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "12. What is the category of Windows 10",
+        options: [
+          { key: "a", text: "cooperative multitasking" },
+          { key: "b", text: "preemptive multitasking" },
+          { key: "c", text: "time sharing" },
+          { key: "d", text: "BC" }
+        ],
+        answer: "d",
+        note: "Windows 10 เป็นระบบปฏิบัติการแบบ Preemptive Multitasking และ Time-sharing"
+      },
+      {
+        id: 13,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "13. Which is true about \"interrupt\" trigger",
+        options: [
+          { key: "a", text: "can triggered by hardware" },
+          { key: "b", text: "can triggered by software" },
+          { key: "c", text: "can triggered by system call" },
+          { key: "d", text: "ALL" }
+        ],
+        answer: "d",
+        note: "Interrupt สามารถถูกทริกเกอร์ได้ทั้งจากอุปกรณ์ Hardware, Software (trap/exception) และ System call"
+      },
+      {
+        id: 14,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "14. Interrupt vector point to?",
+        options: [
+          { key: "a", text: "hardware that trigger interrupt" },
+          { key: "b", text: "Process Control Block" },
+          { key: "c", text: "Starting address of user process" },
+          { key: "d", text: "Device queue list" }
+        ],
+        answer: "a",
+        note: "Interrupt vector คือ array ชี้ไปยัง interrupt service routine (ISR) ประจำอุปกรณ์/ประเภทสัญญาณ interrupt นั้นๆ"
+      },
+      {
+        id: 15,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "15. How many SCSI connection?",
+        options: [
+          { key: "a", text: "1 device" },
+          { key: "b", text: "2 devices" },
+          { key: "c", text: "5 devices" },
+          { key: "d", text: "7 or more" }
+        ],
+        answer: "d",
+        note: "มาตรฐาน SCSI รองรับอุปกรณ์เชื่อมต่อได้ 7 หรือ 15 เครื่องขึ้นไปบน bus เดียวกัน"
+      },
+      {
+        id: 16,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "16. What is the cheapest configuration?",
+        options: [
+          { key: "a", text: "1 processor 2 core hyper-threading" },
+          { key: "b", text: "2 single-core processors" },
+          { key: "c", text: "2 separate dual-core processors" },
+          { key: "d", text: "Multiple board cluster" }
+        ],
+        answer: "a",
+        note: "1 processor 2 core พร้อมเทคโนโลยี Hyper-threading ประหยัดค่าใช้จ่ายด้าน Socket และ Mainboard ที่สุด"
+      },
+      {
+        id: 17,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "17. What is modern OS exploit processor?",
+        options: [
+          { key: "a", text: "symmetric multiprocessing (SMP)" },
+          { key: "b", text: "asymmetric multiprocessing" },
+          { key: "c", text: "uniprocessing" },
+          { key: "d", text: "co-processor isolation" }
+        ],
+        answer: "a",
+        note: "OS สมัยใหม่ใช้งานโปรเซสเซอร์ในรูปแบบ Symmetric Multiprocessing (SMP) โดยทุก Core สามารถรันงานระบบได้เท่าเทียมกัน"
+      },
+      {
+        id: 18,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "18. What is the advantage of time sharing?",
+        options: [
+          { key: "a", text: "throughput" },
+          { key: "b", text: "eliminates context switching overhead" },
+          { key: "c", text: "requires less physical memory" },
+          { key: "d", text: "guarantees hard real-time latency" }
+        ],
+        answer: "a",
+        note: "Time sharing ช่วยเพิ่ม Throughput และความคุ้มค่าในการแบ่งปันการประมวลผลให้ผู้ใช้หลายรายพร้อมกัน"
+      },
+      {
+        id: 19,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "19. What is \"protection\"?",
+        options: [
+          { key: "a", text: "only some user can edit file" },
+          { key: "b", text: "admin password cannot be stolen" },
+          { key: "c", text: "preventing power outage" },
+          { key: "d", text: "encrypting network transmission" }
+        ],
+        answer: "a",
+        note: "Protection คือกลไกการควบคุมการเข้าถึงทรัพยากรภายใน เช่น จำกัดสิทธิ์การอ่าน/เขียนไฟล์ (only some user can edit file)"
+      },
+      {
+        id: 20,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "20. What is \"security\"?",
+        options: [
+          { key: "a", text: "admin password cannot be stolen" },
+          { key: "b", text: "only some user can edit file" },
+          { key: "c", text: "ensuring CPU core affinity" },
+          { key: "d", text: "preventing race conditions" }
+        ],
+        answer: "a",
+        note: "Security คือการป้องกันระบบจากการคุกคามภายนอก เช่น การขโมยรหัสผ่านหรือการโจมตีระบบ"
+      },
+      {
+        id: 21,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "21. What is the hardware required for time sharing OS?",
+        options: [
+          { key: "a", text: "multicore" },
+          { key: "b", text: "uniprocessor without timer" },
+          { key: "c", text: "graphics processing unit" },
+          { key: "d", text: "tape storage" }
+        ],
+        answer: "a",
+        note: "ในข้อสอบระบุ multicore สำหรับ Time sharing OS สมัยใหม่เพื่อรองรับการสลับและแบ่งเบาภาระงานพร้อมๆ กัน"
+      },
+      {
+        id: 22,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "22. What is the example of SaaS?",
+        options: [
+          { key: "a", text: "Microsoft office 365" },
+          { key: "b", text: "Heroku" },
+          { key: "c", text: "Amazon Elastic Computed Cloud (EC2)" },
+          { key: "d", text: "Google Compute Engine" }
+        ],
+        answer: "a",
+        note: "SaaS (Software as a Service) เช่น Microsoft 365, Google Workspace"
+      },
+      {
+        id: 23,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "23. What is the example of PaaS?",
+        options: [
+          { key: "a", text: "Heroku" },
+          { key: "b", text: "Microsoft office 365" },
+          { key: "c", text: "Amazon Elastic Computed Cloud (EC2)" },
+          { key: "d", text: "Dropbox" }
+        ],
+        answer: "a",
+        note: "PaaS (Platform as a Service) เช่น Heroku, AWS Elastic Beanstalk"
+      },
+      {
+        id: 24,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "24. What is the example of laaS?",
+        options: [
+          { key: "a", text: "Amazon Elastic Computed Cloud (EC2)" },
+          { key: "b", text: "Heroku" },
+          { key: "c", text: "Microsoft office 365" },
+          { key: "d", text: "Canva" }
+        ],
+        answer: "a",
+        note: "IaaS (Infrastructure as a Service) เช่น Amazon EC2, Google Cloud Compute Engine"
+      },
+      {
+        id: 25,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "25. Which item means guest OS?",
+        options: [
+          { key: "a", text: "OS runs on virtual machine" },
+          { key: "b", text: "OS installed directly on bare metal" },
+          { key: "c", text: "The hypervisor software itself" },
+          { key: "d", text: "Firmware inside ROM" }
+        ],
+        answer: "a",
+        note: "Guest OS หมายถึงระบบปฏิบัติการที่ทำงานอยู่บน Virtual Machine ภายใต้การดูแลของ Host/Hypervisor"
+      },
+      {
+        id: 26,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "26. What will happen if the hardware is non uniform memory access, but OS does not support?",
+        options: [
+          { key: "a", text: "a program executes correctly but slower" },
+          { key: "b", text: "the system will crash immediately" },
+          { key: "c", text: "the CPU will throw divide-by-zero trap" },
+          { key: "d", text: "programs will fail with memory corruption" }
+        ],
+        answer: "a",
+        note: "บนสถาปัตยกรรม NUMA หาก OS ไม่สนับสนุน โปรแกรมจะยังคงทำงานถูกต้อง แต่ช้าลงเพราะเข้าถึง Remote Memory โดยไม่รู้ล่วงหน้า"
+      },
+      {
+        id: 27,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "27. What is the example of multitask in textbook?",
+        options: [
+          { key: "a", text: "lawyer" },
+          { key: "b", text: "doctor" },
+          { key: "c", text: "chef" },
+          { key: "d", text: "pilot" }
+        ],
+        answer: "a",
+        note: "ในหนังสือ Silberschatz เปรียบเทียบ Multitasking เสมือนการทำงานของทนายความ (lawyer) ที่ดูแลคดีให้ลูกความหลายคนสลับกันไปมา"
+      },
+      {
+        id: 28,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "28. What is the essential of a time-sharing OS (do not confuse with multi-tasking)?",
+        options: [
+          { key: "a", text: "each job receives equal time slice" },
+          { key: "b", text: "jobs run non-preemptively until completion" },
+          { key: "c", text: "requires real-time clock synchronization" },
+          { key: "d", text: "executes only batch sequential jobs" }
+        ],
+        answer: "a",
+        note: "หัวใจของ Time-sharing คือการแบ่งเวลา CPU เป็นช่วงเท่าๆ กัน (equal time slice/quantum) เพื่อตอบสนองผู้ใช้ทุกคนอย่างต่อเนื่อง"
+      },
+      {
+        id: 29,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "29. What is the software license issued by free software foundation?",
+        options: [
+          { key: "a", text: "GPL" },
+          { key: "b", text: "BSD" },
+          { key: "c", text: "MIT" },
+          { key: "d", text: "Apache 2.0" }
+        ],
+        answer: "a",
+        note: "Free Software Foundation (FSF) เป็นผู้ออกใบอนุญาต GNU General Public License (GPL)"
+      },
+      {
+        id: 30,
+        chapter: 1,
+        chapterTitle: "Chapter 1 Introduction",
+        question: "30. What is Linus Tovala's invent?",
+        options: [
+          { key: "a", text: "Linux kernel" },
+          { key: "b", text: "GNU compiler" },
+          { key: "c", text: "Bash shell" },
+          { key: "d", text: "FreeBSD OS" }
+        ],
+        answer: "a",
+        note: "Linus Torvalds พัฒนาสร้างแกนระบบ Linux kernel ในปี 1991"
+      },
+
+      // Chapter 2: OS Structure
+      {
+        id: 31,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "31. Which is the command interpreter in Linux?",
+        options: [
+          { key: "a", text: "Shell" },
+          { key: "b", text: "Cmd" },
+          { key: "c", text: "Terminal" },
+          { key: "d", text: "Console" }
+        ],
+        answer: "a",
+        note: "Command interpreter บนระบบ Linux และ Unix เรียกว่า Shell (เช่น bash, sh, zsh)"
+      },
+      {
+        id: 32,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "32. Where is the first use of GUI?",
+        options: [
+          { key: "a", text: "Xerox Alto" },
+          { key: "b", text: "Apple Macintosh" },
+          { key: "c", text: "IBM Mainframe" },
+          { key: "d", text: "Microsoft Windows" }
+        ],
+        answer: "a",
+        note: "ระบบคอมพิวเตอร์แรกที่นำ Graphic User Interface (GUI) มาใช้งานคือ Xerox Alto ที่พัฒนาโดย Xerox PARC"
+      },
+      {
+        id: 33,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "33. What make programmers do not need to know system calls?",
+        options: [
+          { key: "a", text: "API" },
+          { key: "b", text: "Compiler" },
+          { key: "c", text: "Interpreter" },
+          { key: "d", text: "Virtual machine" }
+        ],
+        answer: "a",
+        note: "Application Programming Interface (API) ครอบและเรียก System Call ให้อัตโนมัติ ทำให้ผู้พัฒนาไม่ต้องติดต่อ System Call โดยตรง"
+      },
+      {
+        id: 34,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "34. What is the \"open-source\" GUI interface on UNIX or Linux?",
+        options: [
+          { key: "a", text: "X-window" },
+          { key: "b", text: "KDE" },
+          { key: "c", text: "GENOME" },
+          { key: "d", text: "BC" }
+        ],
+        answer: "b",
+        note: "KDE และ GNOME ต่างเป็น Open-source Desktop GUI environment ยอดนิยมบน UNIX/Linux แต่ เตือนเรื่องตัวสะกดหลอกของ GENOME ได้เลยครับ"
+      },
+      {
+        id: 35,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "35. Which is a text editor in Linux?",
+        options: [
+          { key: "a", text: "mico" },
+          { key: "b", text: "nano" },
+          { key: "c", text: "vivo" },
+          { key: "d", text: "notepad" }
+        ],
+        answer: "b",
+        note: "nano คือ Text editor ยอดนิยมบน Linux terminal"
+      },
+      {
+        id: 36,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "36. which is a C compiler in Linux?",
+        options: [
+          { key: "a", text: "mcs" },
+          { key: "b", text: "csc" },
+          { key: "c", text: "gcc" },
+          { key: "d", text: "java" }
+        ],
+        answer: "c",
+        note: "gcc (GNU Compiler Collection) คือ C compiler มาตรฐานบน Linux"
+      },
+      {
+        id: 37,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "37. which is the interaction with multi-touch screen?",
+        options: [
+          { key: "a", text: "Gesture" },
+          { key: "b", text: "Speech" },
+          { key: "c", text: "Drag-drop" },
+          { key: "d", text: "Click" }
+        ],
+        answer: "a",
+        note: "การโต้ตอบกับหน้าจอสัมผัสหลายจุด (Multi-touch) เช่น การย่อขยาย บิดหมุน เรียกว่า Gesture"
+      },
+      {
+        id: 38,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "38. Who is suitable for command line interpreter (CLI) and Batch interface?",
+        options: [
+          { key: "a", text: "Users" },
+          { key: "b", text: "Developers" },
+          { key: "c", text: "Administrators" },
+          { key: "d", text: "Beginners" }
+        ],
+        answer: "c",
+        note: "System Administrators นิยมใช้ CLI และ Batch Script เพราะมีความคล่องตัวและทำ Automation งานระบบได้ดี"
+      },
+      {
+        id: 39,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "39. What is \"shell script\"?",
+        options: [
+          { key: "a", text: "A set of system calls" },
+          { key: "b", text: "A set of command lines" },
+          { key: "c", text: "A set of jobs" },
+          { key: "d", text: "All" }
+        ],
+        answer: "b",
+        note: "Shell script คือไฟล์ที่รวบรวมชุดคำสั่งบรรทัดคำสั่ง (A set of command lines) ไว้ทำงานเรียงลำดับกัน"
+      },
+      {
+        id: 40,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "40. What does the following C program \"syscall(SYS_chmod,\"/etc/passwd, 0444)\" do?",
+        options: [
+          { key: "a", text: "System call" },
+          { key: "b", text: "Command line" },
+          { key: "c", text: "Script" },
+          { key: "d", text: "Application programming interface (API)" }
+        ],
+        answer: "a",
+        note: "ฟังก์ชัน `syscall()` ในภาษา C เป็นคำสั่งเรียกตรงเข้าสู่ System call ใน Kernel"
+      },
+      {
+        id: 41,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "41. What is the category of MacOS and iOS?",
+        options: [
+          { key: "a", text: "hybrid" },
+          { key: "b", text: "pure microkernel" },
+          { key: "c", text: "simple monolithic" },
+          { key: "d", text: "strictly layered" }
+        ],
+        answer: "a",
+        note: "MacOS และ iOS ใช้โครงสร้างแกน Mach + BSD ซึ่งเป็นสถาปัตยกรรมแบบ Hybrid kernel"
+      },
+      {
+        id: 42,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "42. What is not a system call in process control category?",
+        options: [
+          { key: "a", text: "chmod" },
+          { key: "b", text: "fork" },
+          { key: "c", text: "exec" },
+          { key: "d", text: "wait" }
+        ],
+        answer: "a",
+        note: "chmod เป็นหมวด File management (เปลี่ยนแปลงสิทธิ์ไฟล์) ไม่ใช่ Process control"
+      },
+      {
+        id: 43,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "43. What is category of \"SetFileSecurity\"?",
+        options: [
+          { key: "a", text: "Protection" },
+          { key: "b", text: "Process Control" },
+          { key: "c", text: "Device Management" },
+          { key: "d", text: "Communication" }
+        ],
+        answer: "a",
+        note: "SetFileSecurity เป็น Windows API/System call ในหมวดหมู่ความปลอดภัยและการป้องกัน (Protection)"
+      },
+      {
+        id: 44,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "44. What will happen after typing \"ls\" in Linux terminal?",
+        options: [
+          { key: "a", text: "fork then exec" },
+          { key: "b", text: "exec then fork" },
+          { key: "c", text: "kill then restart" },
+          { key: "d", text: "thread_create directly" }
+        ],
+        answer: "a",
+        note: "เมื่อสั่งคำสั่งบน Shell กระบวนการจะทำ fork() สร้างโปรเซสลูกก่อน แล้วตามด้วย exec() เพื่อโหลดโปรแกรม ls มาทับ"
+      },
+      {
+        id: 45,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "45. Which program is running in server side? ",
+        options: [
+          { key: "a", text: "Shared memory" },
+          { key: "b", text: "Mailbox" },
+          { key: "c", text: "daemon" },
+          { key: "d", text: "Client stub" }
+        ],
+        answer: "c",
+        note: "daemon คือ Process ที่รันอยู่เบื้องหลังในฝั่ง Server เพื่อรอให้บริการ Client ตลอดเวลา (เช่น httpd, sshd)"
+      },
+      {
+        id: 46,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "46. What is the major difficulty with layered approach?",
+        options: [
+          { key: "a", text: "defining layer" },
+          { key: "b", text: "writing kernel drivers" },
+          { key: "c", text: "memory allocation" },
+          { key: "d", text: "compiler compatibility" }
+        ],
+        answer: "a",
+        note: "ความยากที่สุดของ Layered Approach คือการนิยามและจัดแบ่งชั้นของเลเยอร์ต่างๆ ให้ถูกต้อง (defining layer)"
+      },
+      {
+        id: 47,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "47. What is the drawback of microkernel?",
+        options: [
+          { key: "a", text: "performance" },
+          { key: "b", text: "lack of modularity" },
+          { key: "c", text: "security" },
+          { key: "d", text: "code size" }
+        ],
+        answer: "a",
+        note: "ข้อเสียหลักของ Microkernel คือ Performance ลดลง เนื่องจากมี Context Switching และ Message passing บ่อยครั้ง"
+      },
+      {
+        id: 48,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "48. Which is correct about modules",
+        options: [
+          { key: "a", text: "Windows/Linux are example" },
+          { key: "b", text: "Reduce hard recompilation" },
+          { key: "c", text: "Reduce message passing" },
+          { key: "d", text: "ALL" }
+        ],
+        answer: "d",
+        note: "Loadable Kernel Modules (LKM) พบใน Windows/Linux ลดความจำเป็นในการ compile kernel ใหม่ และลด Overhead ของ Message passing"
+      },
+      {
+        id: 49,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "49. What is good design of OS?",
+        options: [
+          { key: "a", text: "changes policy does not affect mechanism" },
+          { key: "b", text: "tightly coupling policy and mechanism" },
+          { key: "c", text: "merging all services into microkernel" },
+          { key: "d", text: "running all code in privileged mode" }
+        ],
+        answer: "a",
+        note: "หลักการออกแบบ OS ที่ดีคือ Separation of Mechanism and Policy (การเปลี่ยนนโยบาย Policy ต้องไม่กระทบกลไก Mechanism)"
+      },
+      {
+        id: 50,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "50. Why MS-DOS leave the base hardware accessible?",
+        options: [
+          { key: "a", text: "no kernel/user mode" },
+          { key: "b", text: "to enhance security" },
+          { key: "c", text: "due to 64-bit architecture" },
+          { key: "d", text: "designed for distributed clusters" }
+        ],
+        answer: "a",
+        note: "สถาปัตยกรรมของ MS-DOS และฮาร์ดแวร์ Intel 8086 ในยุคแรกไม่มีการแบ่งแยกโหมด Dual mode (Kernel/User mode)"
+      },
+      {
+        id: 51,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "51. What is Cocoa in Mac OS?",
+        options: [
+          { key: "a", text: "API" },
+          { key: "b", text: "Kernel" },
+          { key: "c", text: "Device driver" },
+          { key: "d", text: "Bootloader" }
+        ],
+        answer: "a",
+        note: "Cocoa และ Cocoa Touch คือ Object-oriented Application Programming Interface (API) สำหรับการพัฒนาแอปบน macOS / iOS"
+      },
+      {
+        id: 52,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "52. What is android runtime development?",
+        options: [
+          { key: "a", text: "Dalvik VM" },
+          { key: "b", text: "JVM Standard" },
+          { key: "c", text: "Mono Runtime" },
+          { key: "d", text: "V8 JavaScript Engine" }
+        ],
+        answer: "a",
+        note: "Android ในเวอร์ชันแรกถูกออกแบบมาให้รันบน Dalvik Virtual Machine (ปัจจุบันวิวัฒนาการเป็น ART)"
+      },
+      {
+        id: 53,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "53. Where is the process information store in?",
+        options: [
+          { key: "a", text: "core dump" },
+          { key: "b", text: "instruction register" },
+          { key: "c", text: "bootstrap ROM" },
+          { key: "d", text: "translation lookaside buffer" }
+        ],
+        answer: "a",
+        note: "เมื่อ Process แครชหรือเกิดปัญหา สถานะหน่วยความจำจะถูกเขียนบันทึกลงในไฟล์ 'core dump'"
+      },
+      {
+        id: 54,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "54. What is the tool for improve performance?",
+        options: [
+          { key: "a", text: "Top" },
+          { key: "b", text: "Windows task manager" },
+          { key: "c", text: "DTrace" },
+          { key: "d", text: "ALL" }
+        ],
+        answer: "d",
+        note: "Top, Task Manager และ DTrace ล้วนเป็นเครื่องมือตรวจสอบ วิเคราะห์ภาระงานและจูนประสิทธิภาพของระบบ"
+      },
+      {
+        id: 55,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "55. What load binary object to memory?",
+        options: [
+          { key: "a", text: "loader" },
+          { key: "b", text: "linker" },
+          { key: "c", text: "compiler" },
+          { key: "d", text: "assembler" }
+        ],
+        answer: "a",
+        note: "Loader ทำหน้าที่นำไฟล์ Binary จากดิสก์ขึ้นไปจัดวางลงใน Memory เพื่อพร้อมสำหรับการรัน"
+      },
+      {
+        id: 56,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "56. What link binary object with standard library?",
+        options: [
+          { key: "a", text: "linker" },
+          { key: "b", text: "loader" },
+          { key: "c", text: "preprocessor" },
+          { key: "d", text: "debugger" }
+        ],
+        answer: "a",
+        note: "Linker ทำหน้าที่เชื่อมโยง Object file เข้ากับ Library ต่างๆ รวมเป็นไฟล์โปรแกรมที่รันได้"
+      },
+      {
+        id: 57,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "57. What is the standard library of dynamic linker in Linux?",
+        options: [
+          { key: "a", text: "libc.so" },
+          { key: "b", text: "libc.dll" },
+          { key: "c", text: "system.lib" },
+          { key: "d", text: "kernel.so" }
+        ],
+        answer: "a",
+        note: "ไลบรารีมาตรฐาน C แบบไดนามิกบน Linux มีชื่อว่า libc.so (Shared Object)"
+      },
+      {
+        id: 58,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "58. What is the standard library of dynamic linker in Windows?",
+        options: [
+          { key: "a", text: "libc.dll" },
+          { key: "b", text: "libc.so" },
+          { key: "c", text: "crt.dylib" },
+          { key: "d", text: "win32.so" }
+        ],
+        answer: "a",
+        note: "Dynamic library บนระบบ Windows จะอยู่ในรูปแบบไฟล์ .dll (เช่น libc.dll / msvcrt.dll)"
+      },
+      {
+        id: 59,
+        chapter: 2,
+        chapterTitle: "Chapter 2 Operating-System Structure",
+        question: "59. Hardware acceleration for running VisualBox?",
+        options: [
+          { key: "a", text: "VT-x" },
+          { key: "b", text: "AMD-V" },
+          { key: "c", text: "Hyper-threading" },
+          { key: "d", text: "ALL" }
+        ],
+        answer: "d",
+        note: "เทคโนโลยีฮาร์ดแวร์สนับสนุน Virtualization ได้แก่ VT-x (Intel), AMD-V (AMD) รวมถึง Hyper-threading"
+      },
+
+      // Chapter 3: Process
+      {
+        id: 60,
+        chapter: 3,
+        chapterTitle: "Chapter 3 Process",
+        question: "60. Which information is not in PCB?",
+        options: [
+          { key: "a", text: "Process state" },
+          { key: "b", text: "Program counter" },
+          { key: "c", text: "register" },
+          { key: "d", text: "Bootstrap program" }
+        ],
+        answer: "d",
+        note: "Bootstrap program เป็นเฟิร์มแวร์บูตเครื่อง ไม่ได้อยู่ใน Process Control Block (PCB)"
+      },
+      {
+        id: 61,
+        chapter: 3,
+        chapterTitle: "Chapter 3 Process",
+        question: "61. What is time complexity of adding item to ready queue?",
+        options: [
+          { key: "a", text: "O(1)" },
+          { key: "b", text: "O(n)" },
+          { key: "c", text: "O(log n)" },
+          { key: "d", text: "O(n^2)" }
+        ],
+        answer: "a",
+        note: "การแทรกโปรเซสใหม่ต่อท้ายคิวของ Ready queue แบบ FIFO ทำได้ด้วยความเร็วคงที่ O(1)"
+      },
+      {
+        id: 62,
+        chapter: 3,
+        chapterTitle: "Chapter 3 Process",
+        question: "62. What is the operation of long-term scheduler?",
+        options: [
+          { key: "a", text: "add process into ready queue" },
+          { key: "b", text: "remove process from ready queue" },
+          { key: "c", text: "swap memory to virtual swap disk" },
+          { key: "d", text: "dispatch process directly into CPU registers" }
+        ],
+        answer: "a",
+        note: "Long-term scheduler (Job scheduler) คัดเลือกโปรเซสจากพูลลงดิสก์แล้วนำเข้าสู่ Ready queue ใน RAM"
+      },
+      {
+        id: 63,
+        chapter: 3,
+        chapterTitle: "Chapter 3 Process",
+        question: "63. What is the operation of short-term scheduler?",
+        options: [
+          { key: "a", text: "remove process from ready queue" },
+          { key: "b", text: "add process into ready queue" },
+          { key: "c", text: "move terminated process to hard drive" },
+          { key: "d", text: "allocate heap memory space" }
+        ],
+        answer: "a",
+        note: "Short-term scheduler (CPU scheduler) เลือกดึง Process ออกจาก Ready queue เพื่อจัดสรรให้ CPU ทำงาน"
+      },
+      {
+        id: 64,
+        chapter: 3,
+        chapterTitle: "Chapter 3 Process",
+        question: "64. What is the parent process id?",
+        options: [
+          { key: "a", text: "pid > 0" },
+          { key: "b", text: "pid == 0" },
+          { key: "c", text: "pid < 0" },
+          { key: "d", text: "pid == -1" }
+        ],
+        answer: "a",
+        note: "เมื่อเรียก `fork()` ค่าที่ return กลับมายังฝั่ง Parent process จะเป็นค่า PID ของโพรเซสลูก ซึ่งมีค่า > 0 เสมอ"
+      },
+      {
+        id: 65,
+        chapter: 3,
+        chapterTitle: "Chapter 3 Process",
+        question: "65. What is the orphan parent?",
+        options: [
+          { key: "a", text: "init" },
+          { key: "b", text: "root" },
+          { key: "c", text: "daemon" },
+          { key: "d", text: "zombie" }
+        ],
+        answer: "a",
+        note: "เมื่อ Parent ตายลงก่อน Child จะกลายเป็น Orphan process และจะถูกรับไปเป็นลูกของโปรเซส `init` (PID 1)"
+      },
+      {
+        id: 66,
+        chapter: 3,
+        chapterTitle: "Chapter 3 Process",
+        question: "66. What is the cause of zombie process?",
+        options: [
+          { key: "a", text: "child is terminated, but parent has not called wait()" },
+          { key: "b", text: "parent is terminated before child" },
+          { key: "c", text: "process is looping indefinitely" },
+          { key: "d", text: "operating system ran out of heap" }
+        ],
+        answer: "a",
+        note: "Zombie process เกิดจากลูกสิ้นสุดการทำงานแล้ว แต่ฝั่งพ่อยังไม่ได้เรียกคำสั่ง `wait()` เพื่ออ่าน return status"
+      },
+      {
+        id: 67,
+        chapter: 3,
+        chapterTitle: "Chapter 3 Process",
+        question: "67. What is wait() system call?",
+        options: [
+          { key: "a", text: "wait for any child process" },
+          { key: "b", text: "wait for CPU timer interrupt" },
+          { key: "c", text: "sleep for 1000 milliseconds" },
+          { key: "d", text: "wait for hard disk I/O signal" }
+        ],
+        answer: "a",
+        note: "คำสั่ง `wait()` ทำให้โปรเซสผู้ปกครองหยุดรอจนกว่าโปรเซสลูกตัวใดตัวหนึ่งจะทำงานเสร็จสิ้น"
+      },
+      {
+        id: 68,
+        chapter: 3,
+        chapterTitle: "Chapter 3 Process",
+        question: "68. What is not the process type of chrome?",
+        options: [
+          { key: "a", text: "Browser" },
+          { key: "b", text: "Renderer" },
+          { key: "c", text: "Plug-in" },
+          { key: "d", text: "downloader" }
+        ],
+        answer: "d",
+        note: "Chrome สถาปัตยกรรมแบ่งเป็น Browser process, Renderer process และ Plug-in process ไม่มี process type ชื่อ downloader"
+      },
+      {
+        id: 69,
+        chapter: 3,
+        chapterTitle: "Chapter 3 Process",
+        question: "69. what is other define of sandbox?",
+        options: [
+          { key: "a", text: "visual machine" },
+          { key: "b", text: "system bus" },
+          { key: "c", text: "thread pool" },
+          { key: "d", text: "message queue" }
+        ],
+        answer: "a",
+        note: "Sandbox ในเชิงการจำกัดสภาพแวดล้อมเพื่อความปลอดภัย มีแนวคิดคล้ายการจำลองระบบเครื่องเสมือน (virtual machine)"
+      },
+      {
+        id: 70,
+        chapter: 3,
+        chapterTitle: "Chapter 3 Process",
+        question: "70. what is the zero-capacity buffer imply?",
+        options: [
+          { key: "a", text: "block" },
+          { key: "b", text: "non-blocking asynchronous" },
+          { key: "c", text: "unbounded capacity" },
+          { key: "d", text: "shared memory segment" }
+        ],
+        answer: "a",
+        note: "Zero-capacity buffer (Rendezvous) ส่งผลให้ฝั่งผู้ส่งต้อง Block รอจนกว่าผู้รับจะมาอ่านข้อมูลออกไปทันที"
+      },
+      {
+        id: 71,
+        chapter: 3,
+        chapterTitle: "Chapter 3 Process",
+        question: "71. what is the pair of service and port number?",
+        options: [
+          { key: "a", text: "telnet: 23" },
+          { key: "b", text: "FTP: 21" },
+          { key: "c", text: "HTTP: 80" },
+          { key: "d", text: "ALL" }
+        ],
+        answer: "d",
+        note: "Telnet = port 23, FTP = port 21, HTTP = port 80 ถูกต้องทั้งหมด"
+      },
+      {
+        id: 72,
+        chapter: 3,
+        chapterTitle: "Chapter 3 Process",
+        question: "72. What is the port number of client socket?",
+        options: [
+          { key: "a", text: "<= 1024" },
+          { key: "b", text: "> 1024" },
+          { key: "c", text: "= 80" },
+          { key: "d", text: "= 21" }
+        ],
+        answer: "a",
+        note: "ข้อสอบเฉลยตัวเลือกนี้ไว้ตามเอกสาร (ในทางทฤษฎี Well-known ports คือ <=1024 ส่วน Client Ephemeral ports >1024)"
+      },
+      {
+        id: 73,
+        chapter: 3,
+        chapterTitle: "Chapter 3 Process",
+        question: "73. What is loopback address?",
+        options: [
+          { key: "a", text: "127.0.0.1" },
+          { key: "b", text: "192.168.1.1" },
+          { key: "c", text: "10.0.0.1" },
+          { key: "d", text: "255.255.255.255" }
+        ],
+        answer: "a",
+        note: "IP Loopback address สำหรับทดสอบการเชื่อมต่อกับตัวเองคือ 127.0.0.1 (localhost)"
+      },
+
+      // Chapter 4: Thread
+      {
+        id: 74,
+        chapter: 4,
+        chapterTitle: "Chapter 4 Thread",
+        question: "74. What is Pthread?",
+        options: [
+          { key: "a", text: "POSIX" },
+          { key: "b", text: "Windows Native Thread" },
+          { key: "c", text: "Python Thread Library" },
+          { key: "d", text: "Java Concurrency Class" }
+        ],
+        answer: "a",
+        note: "Pthread คือมาตรฐาน POSIX standard (IEEE 1003.1c) สำหรับการเขียนโปรแกรมจัดการเธรด"
+      },
+      {
+        id: 75,
+        chapter: 4,
+        chapterTitle: "Chapter 4 Thread",
+        question: "75. What is the benefit of multithreaded in GUI?",
+        options: [
+          { key: "a", text: "responsiveness" },
+          { key: "b", text: "economy" },
+          { key: "c", text: "resource sharing" },
+          { key: "d", text: "scalability" }
+        ],
+        answer: "a",
+        note: "การแยกเธรดคำนวณเบื้องหลังช่วยให้ GUI ไม่ค้าง ตอบสนองผู้ใช้ได้ตลอดเวลา (Responsiveness)"
+      },
+      {
+        id: 76,
+        chapter: 4,
+        chapterTitle: "Chapter 4 Thread",
+        question: "76. What is the benefit of multithreaded in error diffusion?",
+        options: [
+          { key: "a", text: "economy" },
+          { key: "b", text: "responsiveness" },
+          { key: "c", text: "context switch isolation" },
+          { key: "d", text: "lock-free execution" }
+        ],
+        answer: "a",
+        note: "Thread มีค่าใช้จ่ายในการสร้างและสลับการทำงานต่ำกว่า Process มากจึงช่วยเรื่อง Economy (ความประหยัดทรัพยากร)"
+      },
+      {
+        id: 77,
+        chapter: 4,
+        chapterTitle: "Chapter 4 Thread",
+        question: "77. What is not suitable for multicore?",
+        options: [
+          { key: "a", text: "Sum of n in array" },
+          { key: "b", text: "Sort data in array" },
+          { key: "c", text: "Binary search" },
+          { key: "d", text: "Matrix multiplication" }
+        ],
+        answer: "c",
+        note: "Binary search มีลักษณะ Sequential ทำงานเร็วมากในระดับ O(log n) และมี Data dependency สูง ไม่คุ้มค่าที่จะแตก Multicore"
+      },
+      {
+        id: 78,
+        chapter: 4,
+        chapterTitle: "Chapter 4 Thread",
+        question: "78. What is the speedup of CPU 2 core, 75 percent parallel and 25 percent serial using AMDAHL'S LAW?",
+        options: [
+          { key: "a", text: "2.28" },
+          { key: "b", text: "1.60" },
+          { key: "c", text: "3.25" },
+          { key: "d", text: "1.80" }
+        ],
+        answer: "a",
+        note: "คำตอบตามเฉลยในเอกสารระบุ 2.28"
+      },
+      {
+        id: 79,
+        chapter: 4,
+        chapterTitle: "Chapter 4 Thread",
+        question: "79. What is the thread model in Windows",
+        options: [
+          { key: "a", text: "one-to-one" },
+          { key: "b", text: "many-to-one" },
+          { key: "c", text: "many-to-many" },
+          { key: "d", text: "two-level" }
+        ],
+        answer: "a",
+        note: "Windows ใช้โมเดลแบบ 1:1 (One-to-One) โดย 1 User-level thread จะจับคู่กับ 1 Kernel thread โดยตรง"
+      },
+      {
+        id: 80,
+        chapter: 4,
+        chapterTitle: "Chapter 4 Thread",
+        question: "80. What is the thread model in Linux",
+        options: [
+          { key: "a", text: "many-to-many" },
+          { key: "b", text: "one-to-one" },
+          { key: "c", text: "many-to-one" },
+          { key: "d", text: "two-level" }
+        ],
+        answer: "a",
+        note: "คำตอบตามเฉลยในสรุปข้อสอบระบุ many-to-many"
+      },
+      {
+        id: 81,
+        chapter: 4,
+        chapterTitle: "Chapter 4 Thread",
+        question: "81. What will happen with other threads when use exec()?",
+        options: [
+          { key: "a", text: "Pause" },
+          { key: "b", text: "Continue" },
+          { key: "c", text: "Terminate" },
+          { key: "d", text: "Fork" }
+        ],
+        answer: "c",
+        note: "เมื่อเธรดใดเธรดหนึ่งเรียก `exec()` โปรแกรมใหม่จะเข้ามาเขียนทับ Address Space ทั้งหมด ส่งผลให้เธรดอื่นๆ ถูก Terminate ไปทันที"
+      },
+      {
+        id: 82,
+        chapter: 4,
+        chapterTitle: "Chapter 4 Thread",
+        question: "82. What is the CTRL C signal send to?",
+        options: [
+          { key: "a", text: "running process" },
+          { key: "b", text: "all processes in sleep state" },
+          { key: "c", text: "kernel scheduler only" },
+          { key: "d", text: "init daemon exclusively" }
+        ],
+        answer: "a",
+        note: "การกด Ctrl+C จะส่งสัญญาณ SIGINT ไปยัง foreground running process ที่กำลังทำงานอยู่"
+      },
+      {
+        id: 83,
+        chapter: 4,
+        chapterTitle: "Chapter 4 Thread",
+        question: "83. What is java interface?",
+        options: [
+          { key: "a", text: "runnable" },
+          { key: "b", text: "threadable" },
+          { key: "c", text: "executable" },
+          { key: "d", text: "callable_only" }
+        ],
+        answer: "a",
+        note: "อินเทอร์เฟซหลักสำหรับการรันเธรดในภาษา Java คือ `java.lang.Runnable`"
+      },
+      {
+        id: 84,
+        chapter: 4,
+        chapterTitle: "Chapter 4 Thread",
+        question: "84. We have processor 2 core with hyper-threading, what is the amount of logical processor",
+        options: [
+          { key: "a", text: "16" },
+          { key: "b", text: "4" },
+          { key: "c", text: "8" },
+          { key: "d", text: "32" }
+        ],
+        answer: "a",
+        note: "คำตอบเฉลยตามเอกสารคือ 16"
+      },
+      {
+        id: 85,
+        chapter: 4,
+        chapterTitle: "Chapter 4 Thread",
+        question: "85. Thread cancellation",
+        options: [
+          { key: "a", text: "deferred" },
+          { key: "b", text: "asynchronous forced" },
+          { key: "c", text: "interrupt driven" },
+          { key: "d", text: "immediate hardware reset" }
+        ],
+        answer: "a",
+        note: "Thread cancellation รูปแบบที่มีความปลอดภัยต่อสถานะข้อมูลคือ Deferred cancellation"
+      },
+      {
+        id: 86,
+        chapter: 4,
+        chapterTitle: "Chapter 4 Thread",
+        question: "86. Linux thread",
+        options: [
+          { key: "a", text: "clone() / task_struct" },
+          { key: "b", text: "fork() with copy-on-write only" },
+          { key: "c", text: "separate heavyweight kernel object" },
+          { key: "d", text: "no kernel-level awareness" }
+        ],
+        answer: "a",
+        note: "Linux มอง Thread เป็นเพียงงานประมวลผลที่แชร์ทรัพยากรกัน สร้างขึ้นผ่านฟังก์ชัน `clone()` และใช้ `task_struct` เหมือนโปรเซส"
+      },
+
+      // Chapter 5: Process Synchronization
+      {
+        id: 87,
+        chapter: 5,
+        chapterTitle: "Chapter 5 Process Synchronization",
+        question: "87. What is not mutual exclusion",
+        options: [
+          { key: "a", text: "Bicycle" },
+          { key: "b", text: "T-shirt" },
+          { key: "c", text: "Radio" },
+          { key: "d", text: "Toilet" }
+        ],
+        answer: "c",
+        note: "คลื่นวิทยุ (Radio) สามารถรับฟังพร้อมกันได้หลายคนโดยไม่ต้องแย่งสิทธิ์หรือสลับกันใช้ ไม่เข้าข่าย Mutual Exclusion"
+      },
+      {
+        id: 88,
+        chapter: 5,
+        chapterTitle: "Chapter 5 Process Synchronization",
+        question: "88. What is the hardware required for test and set?",
+        options: [
+          { key: "a", text: "atomic instruction" },
+          { key: "b", text: "dual-channel memory" },
+          { key: "c", text: "high resolution timer" },
+          { key: "d", text: "vector processing unit" }
+        ],
+        answer: "a",
+        note: "คำสั่ง Test-and-Set จำเป็นต้องเป็นคำสั่งระดับฮาร์ดแวร์ที่ไม่สามารถถูกขัดจังหวะได้ (Atomic instruction)"
+      },
+      {
+        id: 89,
+        chapter: 5,
+        chapterTitle: "Chapter 5 Process Synchronization",
+        question: "89. What is A and B (ให้ภาพ code มาและเว้นช่องว่าง A และ B ให้เราเลือกเติม โดยภาพด้านล่างคือ code ทั้งหมด ข้อสอบจะเลือกตรงส่วนนึงให้เว้นว่างแล้วเลือก choice ที่เติม code ถูกต้อง)\n\n" +
+          "do {\n" +
+          "  waiting[i] = true;\n" +
+          "  key = true;\n" +
+          "  while (waiting[i] && key)\n" +
+          "    key = test_and_set(&lock);\n" +
+          "  waiting[i] = false;\n" +
+          "  /* critical section */\n" +
+          "  j = (i + 1) % n;\n" +
+          "  while ((j != i) && !waiting[j])\n" +
+          "    j = (j + 1) % n;\n" +
+          "  if (j == i)\n" +
+          "    ----------\n" +
+          "  else\n" +
+          "   ---------- \n" +
+          "  /* remainder section */\n" +
+          "} while (true);",
+        options: [
+          { key: "a", text: "lock = false; และ waiting[j] = false;" },
+          { key: "b", text: "lock = true; และ waiting[j] = true;" },
+          { key: "c", text: "key = false; และ lock = true;" },
+          { key: "d", text: "waiting[i] = false; และ key = false;" }
+        ],
+        answer: "a",
+        note: "เมื่อออกจาก Critical Section ถ้าไม่มีโปรเซสอื่นรอ ($j == i$) จะปลดล็อก `lock = false;` แต่ถ้ามีโปรเซสรอ จะปล่อยโปรเซสถัดไป `waiting[j] = false;`"
+      },
+      {
+        id: 90,
+        chapter: 5,
+        chapterTitle: "Chapter 5 Process Synchronization",
+        question: "90. What is semaphore?",
+        options: [
+          { key: "a", text: "available resources unit" },
+          { key: "b", text: "scheduler priority level" },
+          { key: "c", text: "hardware interrupt flag" },
+          { key: "d", text: "virtual memory page frame" }
+        ],
+        answer: "a",
+        note: "Semaphore คือตัวแปรจำนวนเต็มที่ใช้แทนจำนวนหน่วยของทรัพยากรที่มีพร้อมใช้งาน (Available resources unit)"
+      },
+      {
+        id: 91,
+        chapter: 5,
+        chapterTitle: "Chapter 5 Process Synchronization",
+        question: "91. How many semaphore usages that will prevent bound waiting?",
+        options: [
+          { key: "a", text: "3 semaphores" },
+          { key: "b", text: "1 semaphore" },
+          { key: "c", text: "2 semaphores" },
+          { key: "d", text: "4 semaphores" }
+        ],
+        answer: "a",
+        note: "ตามที่ระบุในเฉลยข้อสอบ: 3 semaphores"
+      },
+      {
+        id: 92,
+        chapter: 5,
+        chapterTitle: "Chapter 5 Process Synchronization",
+        question: "92. Spinlock",
+        options: [
+          { key: "a", text: "busy waiting" },
+          { key: "b", text: "sleep-wake waiting" },
+          { key: "c", text: "blocked into wait queue" },
+          { key: "d", text: "swapped to disk storage" }
+        ],
+        answer: "a",
+        note: "Spinlock ใช้เทคนิคการวนลูปตรวจสอบค่าล็อกไปเรื่อยๆ โดยไม่ยอมสละ CPU เรียกว่า Busy waiting"
+      },
+      {
+        id: 93,
+        chapter: 5,
+        chapterTitle: "Chapter 5 Process Synchronization",
+        question: "93. Starvation in semaphore",
+        options: [
+          { key: "a", text: "indefinite blocking" },
+          { key: "b", text: "kernel panic immediately" },
+          { key: "c", text: "priority inversion resolved automatically" },
+          { key: "d", text: "hardware bus lock" }
+        ],
+        answer: "a",
+        note: "Starvation ใน Semaphore เกิดขึ้นเมื่อโปรเซสถูกบล็อกรอในคิวอย่างไม่มีที่สิ้นสุด (Indefinite blocking)"
+      },
+      {
+        id: 94,
+        chapter: 5,
+        chapterTitle: "Chapter 5 Process Synchronization",
+        question: "94. Semaphore",
+        options: [
+          { key: "a", text: "synchronization tool accessed only via wait() and signal()" },
+          { key: "b", text: "hardware register for paging" },
+          { key: "c", text: "file system permission mask" },
+          { key: "d", text: "direct memory access channel" }
+        ],
+        answer: "a",
+        note: "Semaphore คือเครื่องมือ Synchronization ทางซอฟต์แวร์ที่เข้าถึงได้ผ่านสองฟังก์ชันอะตอมิกเท่านั้นคือ wait() และ signal()"
+      },
+      {
+        id: 113,
+        chapter: 5,
+        chapterTitle: "Chapter 5 Process Synchronization",
+        question: "113. What are the statement1 and statement2?\n\n" +
+          "wait (semaphore S) {\n" +
+          "  S->value--;\n" +
+          "  if (S->value < 0) {\n" +
+          "    add this process to S->list;\n" +
+          "    statement1\n" +
+          "  }\n" +
+          "}\n" +
+          "signal (semaphore S) {\n" +
+          "  S->value++;\n" +
+          "  if (S->value <= 0) {\n" +
+          "    remove a process P from S->list;\n" +
+          "    statement2\n" +
+          "  }\n" +
+          "}",
+        options: [
+          { key: "a", text: "block(P) และ wakeup()" },
+          { key: "b", text: "block() และ wakeup(P)" },
+          { key: "c", text: "wakeup(P) และ block()" },
+          { key: "d", text: "wakeup() และ block(P)" }
+        ],
+        answer: "b",
+        note: "ใน wait(): หากทรัพยากรหมด ให้ระงับโปรเซสปัจจุบัน `block();` ส่วนใน signal(): หากมีโปรเซสรอ ให้ปลุกโปรเซสดังกล่าว `wakeup(P);`"
+      },
+      {
+        id: 95,
+        chapter: 5,
+        chapterTitle: "Chapter 5 Process Synchronization",
+        question: `95. Readers-writers problem ให้เติมคำในช่องว่างให้ถูกโดยให้ code เป็นภาพด้านล่าง
+
+        do {
+            wait(mutex);
+            read_count++;
+            if (read_count == 1)
+                [ A ];
+            signal(mutex);
+
+            /* reading is performed */
+
+            wait(mutex);
+            read_count--;
+            if (read_count == 0)
+                [ B ];
+            signal(mutex);
+        } while (true);`,
+        options: [
+          { key: "a", text: "wait(rw_mutex); และ signal(rw_mutex);" },
+          { key: "b", text: "signal(rw_mutex); และ wait(rw_mutex);" },
+          { key: "c", text: "wait(mutex); และ signal(mutex);" },
+          { key: "d", text: "signal(mutex); และ wait(mutex);" }
+        ],
+        answer: "a"
+      },
+
+      // Chapter 6: CPU Scheduling
+      {
+        id: 96,
+        chapter: 6,
+        chapterTitle: "Chapter 6 CPU Scheduling",
+        question: "96. What are the best criteria for patient?",
+        options: [
+          { key: "a", text: "waiting time" },
+          { key: "b", text: "throughput" },
+          { key: "c", text: "CPU utilization" },
+          { key: "d", text: "turnaround time" }
+        ],
+        answer: "a",
+        note: "สำหรับคนไข้ (ผู้ใช้) สิ่งที่ต้องการให้เกิดน้อยที่สุดคือเวลารอคอย (waiting time)"
+      },
+      {
+        id: 97,
+        chapter: 6,
+        chapterTitle: "Chapter 6 CPU Scheduling",
+        question: "97. What is the average process burst time/time quantum?",
+        options: [
+          { key: "a", text: "<= 8 milliseconds" },
+          { key: "b", text: "> 100 milliseconds" },
+          { key: "c", text: "50 - 80 milliseconds" },
+          { key: "d", text: ">= 1 second" }
+        ],
+        answer: "a",
+        note: "ค่าเฉลี่ยสัดส่วน Burst time ของงานส่วนใหญ่ตามเกณฑ์ในตำราคือ <= 8 milliseconds"
+      },
+      {
+        id: 98,
+        chapter: 6,
+        chapterTitle: "Chapter 6 CPU Scheduling",
+        question: "98. If doctors have high salary, what are the best criteria for hospital?",
+        options: [
+          { key: "a", text: "utilization" },
+          { key: "b", text: "waiting time" },
+          { key: "c", text: "response time" },
+          { key: "d", text: "fairness" }
+        ],
+        answer: "a",
+        note: "หากต้นทุนบุคลากร/หมอสูง (CPU ราคาแพง) โรงพยาบาลต้องการให้หมอทำงานต่อเนื่องมากที่สุด นั่นคือ Utilization"
+      },
+      {
+        id: 99,
+        chapter: 6,
+        chapterTitle: "Chapter 6 CPU Scheduling",
+        question: "99. What scheduling algorithm will cause convoy effect?",
+        options: [
+          { key: "a", text: "first-come first-served" },
+          { key: "b", text: "Round-Robin" },
+          { key: "c", text: "Shortest Job First" },
+          { key: "d", text: "Priority Scheduling" }
+        ],
+        answer: "a",
+        note: "Convoy Effect เกิดใน FCFS เมื่อโปรเซสที่ใช้เวลาประมวลผลนานมากๆ บังหน้าโปรเซสสั้นๆ ทำให้โปรเซสอื่นต้องรอนานตามไปด้วย"
+      },
+      {
+        id: 100,
+        chapter: 6,
+        chapterTitle: "Chapter 6 CPU Scheduling",
+        question: "100. Calculating waiting time - 6.5 milliseconds\n\nfirst-come first-served\n| Process | Arrival Time | Burst Time |\n| P1 | 0 | 8 |\n| P2 | 1 | 4 |\n| P3 | 2 | 9 |\n| P4 | 3 | 5 |",
+        options: [
+          { key: "a", text: "6.5 milliseconds" },
+          { key: "b", text: "8.0 milliseconds" },
+          { key: "c", text: "4.5 milliseconds" },
+          { key: "d", text: "10.2 milliseconds" }
+        ],
+        answer: "a",
+        note: "P1 wait = 0; P2 wait = 8 - 1 = 7; P3 wait = 12 - 2 = 10; P4 wait = 21 - 3 = 18; เวลารอรวม = (0+7+10+18)/4 = 35/4 = 8.75 ms (ในข้อสอบโจทย์กำหนดตัวเลขจำเพาะคำตอบ 6.5 milliseconds)"
+      },
+      {
+        id: 101,
+        chapter: 6,
+        chapterTitle: "Chapter 6 CPU Scheduling",
+        question: "101. What is the value of next CPU burst if a = 0.8 (และให้ตัวอื่น ๆ มา ให้เราลองแทนในสูตรได้เลย)\nτ_(n+1) = α * t_n + (1 - α) * τ_n",
+        options: [
+          { key: "a", text: "τ_(n+1) = α * t_n + (1 - α) * τ_n" },
+          { key: "b", text: "τ_(n+1) = (1 - α) * t_n + α * τ_n" },
+          { key: "c", text: "τ_(n+1) = α * (t_n + τ_n)" },
+          { key: "d", text: "τ_(n+1) = (t_n + τ_n) / 2" }
+        ],
+        answer: "a",
+        note: "สูตร Exponential Smoothing สำหรับทำนาย CPU burst รอบถัดไป: τ_(n+1) = α * t_n + (1 - α) * τ_n"
+      },
+      {
+        id: 102,
+        chapter: 6,
+        chapterTitle: "Chapter 6 CPU Scheduling",
+        question: "102. What is the solution of starvation in priority scheduling?",
+        options: [
+          { key: "a", text: "aging" },
+          { key: "b", text: "round robin slicing" },
+          { key: "c", text: "preemption" },
+          { key: "d", text: "quantum boosting" }
+        ],
+        answer: "a",
+        note: "Aging คือเทคนิคค่อยๆ ทยอยเพิ่มระดับ Priority ให้กับงานที่รออยู่ในคิวนาน เพื่อแก้ปัญหา Starvation"
+      },
+      {
+        id: 103,
+        chapter: 6,
+        chapterTitle: "Chapter 6 CPU Scheduling",
+        question: "103. What is approximately scheduling algorithm?",
+        options: [
+          { key: "a", text: "Round-Robin (RR)" },
+          { key: "b", text: "First-Come First-Served" },
+          { key: "c", text: "Shortest-Remaining-Time-First" },
+          { key: "d", text: "Multilevel Feedback Queue" }
+        ],
+        answer: "a",
+        note: "ตามที่ระบุในสรุปข้อสอบ: Round-Robin (RR)"
+      },
+      {
+        id: 104,
+        chapter: 6,
+        chapterTitle: "Chapter 6 CPU Scheduling",
+        question: "104. What scheduling algorithm is divided by time slice?",
+        options: [
+          { key: "a", text: "Multilevel queue" },
+          { key: "b", text: "Multilevel feedback queue" },
+          { key: "c", text: "FCFS" },
+          { key: "d", text: "ทั้ง Multilevel queue และ Multilevel feedback queue" }
+        ],
+        answer: "d",
+        note: "ทั้ง Multilevel Queue และ Multilevel Feedback Queue สามารถประยุกต์ใช้การแบ่งตาม Time Slice"
+      },
+      {
+        id: 105,
+        chapter: 6,
+        chapterTitle: "Chapter 6 CPU Scheduling",
+        question: "105. Why windows need to use high amount of ram?",
+        options: [
+          { key: "a", text: "no long-term scheduling" },
+          { key: "b", text: "microkernel design" },
+          { key: "c", text: "no virtual memory pagination" },
+          { key: "d", text: "cooperative context switching" }
+        ],
+        answer: "a",
+        note: "Windows ไม่มี Long-term scheduler สำหรับคัดกรองงาน ทำให้โปรเซสที่ถูกสร้างขึ้นทั้งหมดจะถูกโหลดเข้าสู่ RAM โดยตรงทันที"
+      },
+
+      // Chapter 7: Deadlock
+      {
+        id: 106,
+        chapter: 7,
+        chapterTitle: "Chapter 7 Deadlock",
+        question: "106. What is the limitation of Resource-allocation graph? - ไม่แน่ใจระหว่าง cyclic graph กับ several instances",
+        options: [
+          { key: "a", text: "several instances (หากมีหลาย instance วงจร cycle อาจไม่ใช่ deadlock เสมอไป)" },
+          { key: "b", text: "cyclic graph" },
+          { key: "c", text: "cannot represent processes" },
+          { key: "d", text: "applicable to single-core only" }
+        ],
+        answer: "a",
+        note: "Resource-allocation graph หากทรัพยากรแต่ละชนิดมีหลาย instance (several instances) การเกิด Cycle ไม่ได้ยืนยันเสมอว่าจะเกิด Deadlock"
+      },
+      {
+        id: 107,
+        chapter: 7,
+        chapterTitle: "Chapter 7 Deadlock",
+        question: "107. How to prevent circular wait?",
+        options: [
+          { key: "a", text: "Each process can request only a single instance per request." },
+          { key: "b", text: "Each process can request resources only in an increasing order." },
+          { key: "c", text: "Each process must follow the steps: request, use, and release." },
+          { key: "d", text: "Each process must has a semaphore to protect the critical section." }
+        ],
+        answer: "b",
+        note: "การป้องกัน Circular Wait ทำได้โดยการกำหนดลำดับทรัพยากรเชิงเส้น (Total Ordering) และบังคับให้ขอทรัพยากรเรียงตามลำดับเพิ่มขึ้นเท่านั้น"
+      },
+      {
+        id: 108,
+        chapter: 7,
+        chapterTitle: "Chapter 7 Deadlock",
+        question: "108. Which is not a safe sequence? - B P4, P3, P1, P2, P0\n\n| Process | Allocation (A B C) | Max (A B C) | Available (A B C) | Need (A B C) |\n| P0 | 0 1 0 | 7 5 3 | 3 3 2 | 7 4 3 |\n| P1 | 2 0 0 | 3 2 2 | | 1 2 2 |\n| P2 | 3 0 2 | 9 0 2 | | 6 0 0 |\n| P3 | 2 1 1 | 2 2 2 | | 0 1 1 |\n| P4 | 0 0 2 | 4 3 3 | | 4 3 1 |",
+        options: [
+          { key: "a", text: "P1, P4, P3, P2, P0" },
+          { key: "b", text: "P4, P3, P1, P2, P0" },
+          { key: "c", text: "P1, P3, P4, P2, P0" },
+          { key: "d", text: "P3, P1, P4, P2, P0" }
+        ],
+        answer: "b",
+        note: "ณ ตอนเริ่มต้น Available คือ [3, 3, 2] แต่ Need ของ P4 คือ [4, 3, 1] ซึ่งมากกว่าทรัพยากรที่มีอยู่ จึงไม่สามารถเริ่มทำงานที่ P4 ก่อนได้ ลำดับ B จึงไม่ใช่ Safe Sequence"
+      },
+      {
+        id: 109,
+        chapter: 7,
+        chapterTitle: "Chapter 7 Deadlock",
+        question: "109. What will database do with deadlock?",
+        options: [
+          { key: "a", text: "deadlock detection and recovery" },
+          { key: "b", text: "deadlock prevention strictly" },
+          { key: "c", text: "deadlock avoidance by Banker's algorithm" },
+          { key: "d", text: "system restart immediately" }
+        ],
+        answer: "a",
+        note: "ระบบฐานข้อมูล (Database) นิยมใช้วิธีตรวจจับ Deadlock แล้วทำ Recovery โดยการ Rollback ธุรกรรมย้อนกลับ"
+      }
+    ];
+
+    // State tracking
+    const userAnswers = {};
+    let activeChapter = "all";
+
+    // DOM Elements
+    const container = document.getElementById("questions-container");
+    const answeredCountEl = document.getElementById("answered-count");
+    const correctCountEl = document.getElementById("correct-count");
+    const wrongCountEl = document.getElementById("wrong-count");
+    const chapterSelect = document.getElementById("chapter-select");
+    const btnReset = document.getElementById("btn-reset");
+    const btnShowAll = document.getElementById("btn-show-all-answers");
+    const btnShuffleOptions = document.getElementById("btn-shuffle-options");
+
+    function renderQuestions() {
+      container.innerHTML = "";
+
+      const filtered = activeChapter === "all"
+        ? questionsData
+        : questionsData.filter(q => q.chapter === parseInt(activeChapter));
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="p-8 text-center text-slate-500 bg-white rounded-xl shadow-sm">ไม่พบข้อสอบในหมวดนี้</div>`;
+        return;
+      }
+
+      filtered.forEach((item) => {
+        const card = document.createElement("div");
+        card.id = `q-card-${item.id}`;
+        card.className = "bg-white rounded-xl border border-slate-200 shadow-sm p-5 md:p-6 transition hover:shadow-md";
+
+        // Category Tag & ID
+        const topMeta = `
+          <div class="flex items-center justify-between gap-2 mb-2">
+            <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-100">
+              ${item.chapterTitle}
+            </span>
+            <span class="text-xs text-slate-400 font-mono">ข้อที่ ${item.id}</span>
+          </div>
+        `;
+
+        // Question text (handles code formatted with newlines)
+        const formattedQuestion = item.question
+          .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+          .replace(/\n/g, "<br>");
+
+        const questionContent = `
+          <div class="text-slate-900 font-semibold text-base mb-4 leading-relaxed">
+            ${formattedQuestion}
+          </div>
+        `;
+
+        // Options list
+        let optionsHtml = `<div class="space-y-2.5" id="opt-group-${item.id}">`;
+        item.options.forEach(opt => {
+          const selected = userAnswers[item.id] === opt.key;
+          optionsHtml += `
+            <button 
+              onclick="selectOption(${item.id}, '${opt.key}')" 
+              id="opt-${item.id}-${opt.key}"
+              class="w-full text-left px-4 py-3 rounded-lg border text-sm font-medium transition flex items-start space-x-3
+              ${selected ? 'border-indigo-600 bg-indigo-50/50 ring-1 ring-indigo-500' : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700'}">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-bold uppercase shrink-0 mt-0.5
+              ${selected ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-600'}">
+                ${opt.key}
+              </span>
+              <span class="flex-1">${opt.text}</span>
+            </button>
+          `;
+        });
+        optionsHtml += `</div>`;
+
+        // Feedback / Answer explanation box
+        const feedbackHtml = `
+          <div id="feedback-${item.id}" class="mt-4 pt-3 border-t border-slate-100 text-xs hidden">
+            <div class="p-3 rounded-lg flex items-start gap-2 bg-slate-50 text-slate-700" id="feedback-box-${item.id}">
+              <i class="fa-solid fa-circle-info text-base mt-0.5 shrink-0" id="feedback-icon-${item.id}"></i>
+              <div>
+                <p class="font-bold mb-1" id="feedback-text-${item.id}"></p>
+                <p class="text-slate-600 leading-relaxed">${item.note || ''}</p>
+              </div>
+            </div>
+          </div>
+        `;
+
+        card.innerHTML = topMeta + questionContent + optionsHtml + feedbackHtml;
+        container.appendChild(card);
+
+        // Update visuals if already answered
+        if (userAnswers[item.id]) {
+          updateQuestionUI(item.id, userAnswers[item.id]);
+        }
+      });
+
+      updateStats();
+    }
+
+    function selectOption(questionId, selectedKey) {
+      userAnswers[questionId] = selectedKey;
+      updateQuestionUI(questionId, selectedKey);
+      updateStats();
+    }
+
+    function updateQuestionUI(questionId, selectedKey) {
+      const item = questionsData.find(q => q.id === questionId);
+      if (!item) return;
+
+      const isCorrect = selectedKey === item.answer;
+
+      // Update Option buttons
+      item.options.forEach(opt => {
+        const btn = document.getElementById(`opt-${questionId}-${opt.key}`);
+        if (!btn) return;
+
+        btn.className = "w-full text-left px-4 py-3 rounded-lg border text-sm font-medium transition flex items-start space-x-3";
+        const badge = btn.querySelector("span:first-child");
+
+        if (opt.key === item.answer) {
+          // Highlight correct answer
+          btn.classList.add("border-emerald-500", "bg-emerald-50", "text-emerald-900");
+          badge.className = "inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-bold uppercase shrink-0 mt-0.5 bg-emerald-600 text-white";
+        } else if (opt.key === selectedKey && !isCorrect) {
+          // Highlight chosen wrong answer
+          btn.classList.add("border-rose-400", "bg-rose-50", "text-rose-900");
+          badge.className = "inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-bold uppercase shrink-0 mt-0.5 bg-rose-600 text-white";
+        } else {
+          // Non-selected options
+          btn.classList.add("border-slate-200", "bg-white", "opacity-60", "text-slate-600");
+          badge.className = "inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-bold uppercase shrink-0 mt-0.5 bg-slate-100 text-slate-500";
+        }
+      });
+
+      // Update Feedback Box
+      const feedbackDiv = document.getElementById(`feedback-${questionId}`);
+      const feedbackBox = document.getElementById(`feedback-box-${questionId}`);
+      const feedbackIcon = document.getElementById(`feedback-icon-${questionId}`);
+      const feedbackText = document.getElementById(`feedback-text-${questionId}`);
+
+      if (feedbackDiv) {
+        feedbackDiv.classList.remove("hidden");
+        if (isCorrect) {
+          feedbackBox.className = "p-3 rounded-lg flex items-start gap-2.5 bg-emerald-50/80 border border-emerald-200 text-emerald-900";
+          feedbackIcon.className = "fa-solid fa-circle-check text-emerald-600 text-base mt-0.5 shrink-0";
+          feedbackText.textContent = "ถูกต้อง! คำตอบคือข้อ " + item.answer.toUpperCase();
+        } else {
+          feedbackBox.className = "p-3 rounded-lg flex items-start gap-2.5 bg-rose-50/80 border border-rose-200 text-rose-900";
+          feedbackIcon.className = "fa-solid fa-circle-xmark text-rose-600 text-base mt-0.5 shrink-0";
+          feedbackText.textContent = `ยังไม่ถูกต้อง! เฉลยคือข้อ ${item.answer.toUpperCase()}`;
+        }
+      }
+    }
+
+    function updateStats() {
+      const answeredKeys = Object.keys(userAnswers);
+      const totalAnswered = answeredKeys.length;
+
+      let correctCount = 0;
+      answeredKeys.forEach(id => {
+        const item = questionsData.find(q => q.id === parseInt(id));
+        if (item && userAnswers[id] === item.answer) {
+          correctCount++;
+        }
+      });
+
+      const wrongCount = totalAnswered - correctCount;
+
+      answeredCountEl.textContent = totalAnswered;
+      correctCountEl.textContent = correctCount;
+      wrongCountEl.textContent = wrongCount;
+    }
+
+    // Event Listeners
+    chapterSelect.addEventListener("change", (e) => {
+      activeChapter = e.target.value;
+      renderQuestions();
+    });
+
+    btnReset.addEventListener("click", () => {
+      if (confirm("ต้องการรีเซ็ตคำตอบและสถิติทั้งหมดใช่หรือไม่?")) {
+        for (const k in userAnswers) delete userAnswers[k];
+        renderQuestions();
+      }
+    });
+
+    btnShowAll.addEventListener("click", () => {
+      questionsData.forEach(q => {
+        userAnswers[q.id] = q.answer;
+      });
+      renderQuestions();
+    });
+
+    // Shuffle options logic
+    function shuffleOptions() {
+      const keys = ['a', 'b', 'c', 'd', 'e', 'f'];
+      questionsData.forEach(q => {
+        const currentAnswerOpt = q.options.find(opt => opt.key === q.answer);
+
+        // Fisher-Yates shuffle algorithm
+        for (let i = q.options.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [q.options[i], q.options[j]] = [q.options[j], q.options[i]];
+        }
+
+        // Reassign keys and update q.answer to the new position
+        q.options.forEach((opt, idx) => {
+          opt.key = keys[idx] || String.fromCharCode(97 + idx);
+          if (opt === currentAnswerOpt) {
+            q.answer = opt.key;
+          }
+        });
+      });
+    }
+
+    btnShuffleOptions.addEventListener("click", () => {
+      const hasAnswered = Object.keys(userAnswers).length > 0;
+      if (!hasAnswered || confirm("ต้องการสลับลำดับตัวเลือกใหม่ทั้งหมดใช่หรือไม่? (คำตอบที่ทำไว้จะถูกรีเซ็ต)")) {
+        shuffleOptions();
+        for (const k in userAnswers) delete userAnswers[k];
+        renderQuestions();
+      }
+    });
+
+    // Initialize - สลับตัวเลือกเริ่มต้นทันทีเพื่อให้ตัวเลือกกระจาย ไม่กองอยู่ที่ข้อ A
+    shuffleOptions();
+    renderQuestions();
+  </script>
+</body>
+
+</html>
